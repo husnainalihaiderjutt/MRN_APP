@@ -8,7 +8,7 @@ import AppContext from "../context/AppContext";
 const ProductDetail = () => {
   const { id } = useParams();
   const { addToCart } = useContext(AppContext);
-  const Url = "http://localhost:3000/api";
+  const Url = "https://mernapp-production-b839.up.railway.app/api";
   const [product, setProduct ] = useState(null);
   useEffect(() => {
     const fetchProduct = async () => {
