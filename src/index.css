@@ -15,20 +15,27 @@ body::-webkit-scrollbar{
   padding: 10px;
   background-color: rgb(70,25,113);
 }
-.sub_bar{
+.sub_bar {
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap; /* Allow wrapping */
+  justify-content: center; /* Center items */
+  gap: 10px; /* Add spacing between items */
   color: white;
   align-items: center;
-
   background-color: rgb(103, 21, 179);
+  padding: 10px 0; /* Add vertical padding */
 }
-.sub_bar .items{
-  padding: 10px;
+
+.sub_bar .items {
+  padding: 8px 16px;
   font-weight: bold;
+  border-radius: 5px;
+  white-space: nowrap; /* Prevent breaking text */
+  transition: background-color 0.3s ease;
 }
-.sub_bar .items:hover{
+
+.sub_bar .items:hover {
   background-color: black;
   cursor: pointer;
 }

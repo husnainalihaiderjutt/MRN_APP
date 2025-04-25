@@ -11,10 +11,10 @@ const ShowProduct = () => {
   }, [filteredData, reload]);
 
   return (
-    <div className="container py-5">
+    <div className="container py-4">
       <div className="row">
         {products.map((product) => (
-          <div key={product._id} className="col-md-4 mb-4">
+          <div key={product._id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
             <div className="card shadow-sm h-100">
               <Link to={`/product/${product._id}`}>
                 <img
@@ -30,8 +30,8 @@ const ShowProduct = () => {
                   {product.description || "No description available."}
                 </p>
                 <p className="card-text fw-bold">Price: ${product.price}</p>
-                <div className="mt-auto d-flex justify-content-between">
-                  <button className="btn btn-primary">{product.price}</button>
+                <div className="mt-auto d-flex justify-content-between gap-2 flex-wrap">
+                  <button className="btn btn-primary flex-grow-1">{product.price}</button>
                   <button
                     onClick={() =>
                       addToCart(
@@ -42,7 +42,7 @@ const ShowProduct = () => {
                         product.imgSrc
                       )
                     }
-                    className="btn btn-warning"
+                    className="btn btn-warning flex-grow-1"
                   >
                     Add to Cart
                   </button>

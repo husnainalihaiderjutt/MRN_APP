@@ -7,36 +7,45 @@ import { useNavigate } from "react-router-dom";
 const ShippingAddressForm = () => {
   const navigate = useNavigate();
   const { shippingAddress, userAddres } = useContext(AppContext);
+  
   const [shippingAddres, setShippingAddress] = useState({
     fullName: "",
-    address: " ",
-    city: " ",
-    state: " ",
-    country: " ",
-    pincode: " ",
-    phoneNumber: " ",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    pincode: "",
+    phoneNumber: "",
   });
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setShippingAddress({ ...shippingAddres, [name]: value });
   };
-  const { fullName, address, city, state, country, pincode, phoneNumber } =
-    shippingAddres;
 
-    const useOldAddress = () => {
-      if (userAddres) {
-        setShippingAddress({
-          fullName: userAddres.fullName || "",
-          address: userAddres.address || "",
-          city: userAddres.city || "",
-          state: userAddres.state || "",
-          country: userAddres.country || "",
-          pincode: userAddres.pincode || "",
-          phoneNumber: userAddres.phoneNumber || "",
-        });
-      }
+  const {
+    fullName,
+    address,
+    city,
+    state,
+    country,
+    pincode,
+    phoneNumber,
+  } = shippingAddres;
+
+  const useOldAddress = () => {
+    if (userAddres) {
+      setShippingAddress({
+        fullName: userAddres.fullName || "",
+        address: userAddres.address || "",
+        city: userAddres.city || "",
+        state: userAddres.state || "",
+        country: userAddres.country || "",
+        pincode: userAddres.pincode || "",
+        phoneNumber: userAddres.phoneNumber || "",
+      });
     }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,14 +59,10 @@ const ShippingAddressForm = () => {
         pincode,
         phoneNumber
       );
-      console.log("API response:", result); // Log the full response to check the structure
       if (result && result.success) {
         navigate("/checkout");
       } else {
-        console.error(
-          "Failed to add address:",
-          result?.message || "Unknown error"
-        );
+        console.error("Failed to add address:", result?.message || "Unknown error");
       }
     } catch (error) {
       console.error("Error in shipping address submission:", error);
@@ -75,10 +80,11 @@ const ShippingAddressForm = () => {
               <input
                 type="text"
                 className="form-control bg-secondary text-white"
-                required
                 name="fullName"
-                value={shippingAddres.fullName}
+                value={fullName}
                 onChange={handleOnChange}
+                required
+                autoComplete="name"
               />
             </div>
             <div className="col-md-3">
@@ -86,10 +92,11 @@ const ShippingAddressForm = () => {
               <input
                 type="text"
                 className="form-control bg-secondary text-white"
-                required
                 name="country"
-                value={shippingAddres.country}
+                value={country}
                 onChange={handleOnChange}
+                required
+                autoComplete="country"
               />
             </div>
             <div className="col-md-3">
@@ -97,10 +104,11 @@ const ShippingAddressForm = () => {
               <input
                 type="text"
                 className="form-control bg-secondary text-white"
-                required
                 name="state"
-                value={shippingAddres.state}
+                value={state}
                 onChange={handleOnChange}
+                required
+                autoComplete="address-level1"
               />
             </div>
           </div>
@@ -111,10 +119,11 @@ const ShippingAddressForm = () => {
               <input
                 type="text"
                 className="form-control bg-secondary text-white"
-                required
                 name="city"
-                value={shippingAddres.city}
+                value={city}
                 onChange={handleOnChange}
+                required
+                autoComplete="address-level2"
               />
             </div>
             <div className="col-md-4">
@@ -122,43 +131,50 @@ const ShippingAddressForm = () => {
               <input
                 type="text"
                 className="form-control bg-secondary text-white"
-                required
                 name="pincode"
-                value={shippingAddres.pincode}
+                value={pincode}
                 onChange={handleOnChange}
+                required
+                autoComplete="postal-code"
               />
             </div>
             <div className="col-md-4">
               <label className="form-label">Phone Number</label>
               <input
-                type="text"
+                type="tel"
                 className="form-control bg-secondary text-white"
-                required
                 name="phoneNumber"
-                value={shippingAddres.phoneNumber}
+                value={phoneNumber}
                 onChange={handleOnChange}
+                required
+                autoComplete="tel"
               />
             </div>
           </div>
 
           <div className="mb-3">
-            <label className="form-label">AddressLine/Nearby</label>
+            <label className="form-label">AddressLine / Nearby</label>
             <textarea
               className="form-control bg-secondary text-white"
               rows="3"
-              required
               name="address"
-              value={shippingAddres.address}
+              value={address}
               onChange={handleOnChange}
-            ></textarea>
+              required
+              autoComplete="street-address"
+            />
           </div>
 
-          <div className="d-flex justify-content-between">
-            <button type="submit" className="btn btn-primary w-50 me-2">
+          <div className="d-flex flex-column flex-md-row justify-content-between gap-2">
+            <button type="submit" className="btn btn-primary w-100 w-md-50">
               Submit
             </button>
             {userAddres && (
-              <button type="button" className="btn btn-warning w-50 ms-2" onClick={()=> {useOldAddress();  navigate("/checkout")}}>
+              <button
+                type="button"
+                className="btn btn-warning w-100 w-md-50"
+                onClick={useOldAddress}
+              >
                 Use Old Address
               </button>
             )}
